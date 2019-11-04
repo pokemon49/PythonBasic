@@ -1,0 +1,23 @@
+from PIL import Image
+import os
+class ImageStudy():
+    def run(self):
+        path ='G:\\Media\\vadio\\censored\\'
+        image_list = os.listdir(path)
+        n = 0
+        for image in image_list:
+            image_path = path+image
+            if os.path.isfile(image_path):
+                im = Image.open(image_path)
+                try:
+                    pix = im.load()
+                except:
+                    im.close()
+                    n = n + 1
+                    print(image)
+                    #os.remove(image_path)
+        print(n)
+
+
+ims =ImageStudy()
+ims.run()
