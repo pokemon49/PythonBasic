@@ -18,7 +18,7 @@ class DataType(object):
     # 多行
     # #多字符串链接
     S4 = "Multi String Link:" \
-         "Line1" \
+         "Line3" \
          "Line2"
     # #多行字符串
     S5 = '''Multi Column2:
