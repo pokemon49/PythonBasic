@@ -6,7 +6,7 @@ class ClosureStudy(object):
         def g(j):
             return lambda : j * j
         fs=[]
-        for i in (range(1,7)):
+        for i in (range(1,6)):
             fs.append(g(i))
         return fs
     def fun_outer(self):
