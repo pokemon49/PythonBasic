@@ -2,31 +2,54 @@
 # -*- coding: utf-8 -*-
 '多线程学习实例'
 __author__ = '林金行'
+import os, time, random, threading, multiprocessing, threadpool
 
-import os,time,random,threading,multiprocessing
+
 class MulitThreadStudy(object):
     balance = 0
     lock = threading.Lock()
     tl = threading.local()
-    def LoopThread(self):
+    exp_dict = {'Java': 1, 'C': 1, 'Scala': 1}
+    new_bal = 0
+    max_bal = 10000
+    gobal_dict = {'JAVA': 0, 'C': 0, 'C#': 0, 'SCALA': 0, 'SQL': 0, 'C++': 0}
+
+    def LoopThread(self, key='A'):
         print('Thread %s is running' % threading.current_thread().name)
         n = 0
-        while n < 5:
+        while n < 9:
             n = n + 1
-            print("Thread %s >>> %s" % (threading.current_thread().name,n))
+            print("Thread %s >>> %s" % (threading.current_thread().name, n))
             time.sleep(random.random()*1)
+            if key == 'Java':
+                self.exp_dict.update({key: self.exp_dict[key] + n})
+            elif key == 'C':
+                self.exp_dict.update({key: self.exp_dict[key] * n})
+            elif key == 'Scala':
+                self.exp_dict.update({key: self.exp_dict[key] / n})
         print("Thread %s ended." % threading.current_thread().name)
+
     def ThreadActive(self):
         print('Thread %s is running...' % threading.current_thread().name)
-        t = threading.Thread(target=self.LoopThread ,name='LoopThread')
-        t.start()
-        t.join()
+        t1 = threading.Thread(target=self.LoopThread, name='LoopThread1', args=('Java',))
+        t2 = threading.Thread(target=self.LoopThread, name='LoopThread2', args=('C',))
+        t3 = threading.Thread(target=self.LoopThread, name='LoopThread3', args=('Scala',))
+        t1.start()
+        t2.start()
+        t3.start()
+        t1.join()
+        t2.join()
+        t3.join()
+        print(self.exp_dict)
         print("Thread %s end." % threading.current_thread().name)
-    def LockBalance(self,n):
+
+    def LockBalance(self, n):
         self.balance = self.balance + n
         self.balance = self.balance - n
-    def LockThread(self,n):
-        for i in range(1000000):
+
+    # 锁处理方法
+    def LockThread(self, n):
+        for i in range(1000):
             #获得锁
             self.lock.acquire()
             try:
@@ -34,6 +57,7 @@ class MulitThreadStudy(object):
             finally:
                 #释放锁
                 self.lock.release()
+
     def LockThreadActive(self):
         t1 = threading.Thread(target=self.LockThread, args=(5,))
         t2 = threading.Thread(target=self.LockThread, args=(8,))
@@ -57,33 +81,65 @@ class MulitThreadStudy(object):
         t6.join()
         t7.join()
         print(self.balance)
+
     def BadThread(self):
         x = 0
         while True:
-            x =x ^ 1
+            x = x ^ 1
+
     def BadThreadActive(self):
         for i in range(multiprocessing.cpu_count()):
             t = threading.Thread(target= self.BadThread)
             t.start()
-    #ThreadLocal线程变量控制
+
+    # ThreadLocal线程变量控制
     def LocalStudent(self):
         std = self.tl.student
-        print("Hello %s (in %s)" %  (std,threading.current_thread().name))
-    def LocalThread(self,name):
+        print("Hello %s (in %s)" % (std, threading.current_thread().name))
+
+    def LocalThread(self, name):
         self.tl.student = name
         self.LocalStudent()
+
     def LocalThreadActive(self):
         t1 = threading.Thread(target=self.LocalThread, args=("Lily",), name ="Student1")
         t2 = threading.Thread(target=self.LocalThread, args=("Anni",), name ="Student2")
         t1.start()
         t2.start()
+        t1.join()
         t2.join()
-        t2.join()
+
+    # 线程池操作
+    def localThreadPool(self):
+        num_list = [n for n in range(0, 9)]
+        script_list = [['JAVA', 'C', 'C#'], ['SCALA', 'SQL', 'C++']]
+        pool = threadpool.ThreadPool(2)
+        requests = threadpool.makeRequests(self.threadpool_proc, script_list)
+        [pool.putRequest(req) for req in requests]
+        pool.wait()
+        print(self.gobal_dict)
+
+    def threadpool_proc(self, n):
+        for sc in n:
+            print(sc)
+            # self.gobal_dict.update({sc: self.new_bal})
+        # 获得锁
+        self.lock.acquire()
+        try:
+            # print("%d + %d = " % (self.new_bal, n))
+            self.new_bal = self.new_bal + 1
+            # print(self.new_bal)
+            # print(self.new_bal / self.max_bal)
+        finally:
+            # 释放锁
+            self.lock.release()
+
     def run(self):
-        self.ThreadActive()
-        self.LockThreadActive()
-        self.BadThread()
-        self.LocalThreadActive()
+        # self.ThreadActive()
+        # self.LockThreadActive()
+        # self.BadThread()
+        # self.LocalThreadActive()
+        self.localThreadPool()
         pass
 
 mts = MulitThreadStudy()

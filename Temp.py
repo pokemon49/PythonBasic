@@ -5,6 +5,7 @@ __author__ = '林金行'
 
 import queue,time
 class Temp(object):
+    l = []
     def mybreak(self):
         return False
     def loop(self):
@@ -21,6 +22,12 @@ class Temp(object):
                 con = self.mybreak()
             print(i)
             time.sleep(1)
+    def test(self):
+        b = {"keys":0}
+        for a in range(1,10):
+            b["keys"] = a
+            self.l.append(b)
+        return self.l
     def run(self):
         #self.loop()
         self.wloop()
@@ -29,3 +36,4 @@ class Temp(object):
 
 t = Temp()
 t.run()
+print(t.test())

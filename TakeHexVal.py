@@ -45,8 +45,7 @@ class TakeHexVal():
     def run(self):
         if self.isfile(self.file_path):
             f = open(self.file_path, 'rb')
-            # hexval = self.gethexval(f)
-            hexval = f.read().hex().upper()
+            hexval = self.gethexval(f)
             print(hexval)
             f.close()
     pass

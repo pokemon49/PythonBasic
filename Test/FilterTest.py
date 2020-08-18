@@ -21,7 +21,7 @@ class FilterTest(object):
     def run(self):
         for n in self.Core_List():
             print(n)
-            if n > 100:
+            if n > 10000:
                 break
     pass
 

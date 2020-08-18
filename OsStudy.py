@@ -9,8 +9,8 @@ import os,sys,time
 class osstudy():
     # 文件操作
     def fileop(self):
-        path = 'F:\\TEMP'
-        file_path= path+'\\'+'IMG_20180104_152732.jpg'
+        path = 'E:\\'
+        file_path= path +'对比度测试.png'
         #file_path= 'F:\\H6.rar'
         # 获取文件名
         print('--获取文件名')
@@ -29,6 +29,7 @@ class osstudy():
         #获取当前决对路径
         print('--获取当前决对路径')
         tp = os.path.abspath('.')
+        tp = os.getcwd()
         print(tp)
         print('--组合路径')
         tp = os.path.join(tp,'testdir')

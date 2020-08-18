@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-''
+#'多进程编程学习'
 __author__ = '林金行'
 
 from multiprocessing import Process,Pool,Queue
-import os,time,random,subprocess
+import os, time, random, subprocess
 
 #子进程
 class MulitProcessStudy(object):
@@ -56,9 +56,9 @@ class MulitProcessStudy(object):
         pass
     #子程序
     def SubProcess(self):
-        print('$nslookup www.baidu.com')
-        r = subprocess.call(['nslookup','www.baidu.com'])
-        print('Exit code:',r)
+        print('$nslookup baidu.com')
+        r = subprocess.call(['nslookup', 'baidu.com'])
+        print('Exit code:', r)
     #
     def InteractionSubProcess(self):
         print('$nslookup')
@@ -69,7 +69,7 @@ class MulitProcessStudy(object):
     #进程间通信
     def ConnectionProcessWrite(self,q):
         print('Process to Write: %s' % os.getpid())
-        for value in ['AA','AB','AC']:
+        for value in ['AA', 'AB', 'AC']:
             print('Put %s to queue' % value)
             q.put(value)
             time.sleep(random.random()*3)
@@ -81,7 +81,7 @@ class MulitProcessStudy(object):
     def ConnectionProcess(self):
         if __name__ == '__main__':
             q = Queue()
-            pw = Process(target=self.ConnectionProcessWrite,args=(q,))
+            pw = Process(target=self.ConnectionProcessWrite, args=(q,))
             pr = Process(target=self.ConnectionProcessRead, args=(q,))
             pw.start()
             pr.start()
