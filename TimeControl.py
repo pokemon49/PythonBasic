@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'时间控制测试脚本'
+# '时间控制测试脚本'
 __author__ = '林金行'
 
-import random,datetime,time
+import random
+import datetime
+import time
 
 class TimeControl():
     now = 0

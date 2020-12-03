@@ -20,7 +20,6 @@ class TakeHexVal():
 
     # 文件判断处理
     def isfile(self, fp):
-        print(fp)
         if not os.path.exists(fp):
             raise Exception('文件不存在，请输入有效的文件地址！')
         if os.path.getsize(fp) > 16:
@@ -43,10 +42,10 @@ class TakeHexVal():
         return HexVal.upper()
     # 程序入口主调用方法
     def run(self):
+        # self.file_path=r'G:\TS\JUL-268\feaaa9d5d1601d6b920e90654c568f20.key'
         if self.isfile(self.file_path):
             f = open(self.file_path, 'rb')
-            # hexval = self.gethexval(f)
-            hexval = f.read().hex().upper()
+            hexval = self.gethexval(f)
             print(hexval)
             f.close()
     pass

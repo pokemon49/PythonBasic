@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 '多线程学习实例'
 __author__ = '林金行'
-import os, time, random, threading, multiprocessing, threadpool
+import os, time, random, threading, multiprocessing, threadpool, random
 
 
 class MulitThreadStudy(object):
@@ -13,6 +13,8 @@ class MulitThreadStudy(object):
     new_bal = 0
     max_bal = 10000
     gobal_dict = {'JAVA': 0, 'C': 0, 'C#': 0, 'SCALA': 0, 'SQL': 0, 'C++': 0}
+    key_list = list(range(1, 2000))
+    key_runed = []
 
     def LoopThread(self, key='A'):
         print('Thread %s is running' % threading.current_thread().name)
@@ -114,10 +116,12 @@ class MulitThreadStudy(object):
         num_list = [n for n in range(0, 9)]
         script_list = [['JAVA', 'C', 'C#'], ['SCALA', 'SQL', 'C++']]
         pool = threadpool.ThreadPool(2)
-        requests = threadpool.makeRequests(self.threadpool_proc, script_list)
+        # requests = threadpool.makeRequests(self.threadpool_proc, script_list)
+        requests = threadpool.makeRequests(self.threadpool_dict, script_list)
         [pool.putRequest(req) for req in requests]
         pool.wait()
-        print(self.gobal_dict)
+        # print(self.gobal_dict)
+        print(self.key_runed)
 
     def threadpool_proc(self, n):
         for sc in n:
@@ -134,6 +138,24 @@ class MulitThreadStudy(object):
             # 释放锁
             self.lock.release()
 
+    def tk_key(self):
+        self.lock.acquire()
+        try:
+           key = self.key_list[0]
+           self.key_list.pop(0)
+        finally:
+            self.lock.release()
+        return key
+    
+    # 验证多线程返回序列
+    def threadpool_dict(self, para):
+        while 1 == 1:
+            if len(self.key_list) == 0:
+                break
+            key = self.tk_key()
+            self.key_runed.append(key)
+            # re = random.randint(5, 10)
+            # time.sleep(re)
     def run(self):
         # self.ThreadActive()
         # self.LockThreadActive()
