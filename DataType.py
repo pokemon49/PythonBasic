@@ -143,6 +143,36 @@ class DataType(object):
         l1 = [31, 32, 33, 34, 35, 36, 37, 38, 39]
         l2 = [0, 10, 20, 30, l1, 40]
 
+        # 排序样列
+        print('序列排序')
+        l.sort()
+        print(l)
+        # #@sorted方法生成新对像
+        sl = sorted(l, reverse=True)
+        print(sl)
+
+    # #array数组
+    def array_Data(self):
+        from array import array
+        from random import random
+        print('数组模块')
+        floats = array('d', (random()*127 for i in range(10**7)))
+        print(floats[-1])
+        fp = open(r'E:\Study\Python\floats.bin', 'wb')
+        floats.tofile(fp)
+        fp.close()
+        floats2 = array('d')
+        fp = open(r'E:\Study\Python\floats.bin', 'rb')
+        floats2.fromfile(fp, 10**7)
+        fp.close()
+        print(floats2[-1])
+        print(floats[-1] == floats2[-1])
+
+        # ##memoryview
+
+
+
+
     # 不可变系列
     # #Dict
     def dict_Date(self):
@@ -193,11 +223,13 @@ class DataType(object):
         print(s1 & s2)
         print(s1 | s2)
         pass
+
     # #主调用程序
     def run(self):
         self.general_Data()
         self.comm_fun()
         self.list_Data()
+        self.array_Data()
         self.tuple_Data()
         self.dict_Date()
         self.set_Data()

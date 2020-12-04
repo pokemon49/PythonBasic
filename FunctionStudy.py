@@ -83,7 +83,7 @@ class FunctionStudy(object):
     def fact2(self,x):
         return self.fact2_iter(x,1)
 
-    def fact2_iter(self,x,num):
+    def fact2_iter(self, x, num):
         if x == 1:
             return num
         return self.fact2_iter(x - 1,x * num)
