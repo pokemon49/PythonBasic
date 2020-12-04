@@ -93,7 +93,7 @@ class StringStudy(object):
     print("十六进制格式化：%x" % (0x7f36c7))
 
     #tuple不可变序列
-    t = ("Python",1,33)
+    t = ("Python", 1, 33)
     print(t[0]) 
     #声明单元素tuple
     t = (3,)
@@ -114,37 +114,38 @@ class StringStudy(object):
         l1 = ["Lin", "JinHang"]
         print("Surame:{0[0]} Name:{0[1]}".format(l1))  # "0"必须
         ##Mapping类型参数
-        "My Name is {name}".format_map(map(name="abc"))
+
+        "My Name is {name}".format_map({'name': "abc"})
         #格式化数字
         #^, <, > 分别是居中、左对齐、右对齐，后面带宽度， : 号后面带填充的字符，只能是一个字符，不指定则默认是用空格填充。
         #+ 表示在正数前显示 +，负数前显示 -；  （空格）表示在正数前加空格
         #
         ## 保留小数点后两位
-        print("{:.2f}").format(3.1415926538)
+        print("{:.2f}".format(3.1415926538))
         ## 带符号保留小数点后两位
-        print("{:+.2f}").format(3.1415926538)
+        print("{:+.2f}".format(3.1415926538))
         ## 带符号保留小数点后两位
-        print("{:+.2f}").format(3.1415926538)
+        print("{:+.2f}".format(3.1415926538))
         ## 不带小数
-        print("{:.0f}").format(3.1415926538)
+        print("{:.0f}".format(3.1415926538))
         ## 数字补零 (填充左边, 宽度为2)
-        print("{:0>2d}").format(3.1415926538)
+        print("{:0>2d}".format(7))
         ## 数字补x (填充右边, 宽度为4)
-        print("{:x<4d}").format(3.1415926538)
+        print("{:x<4d}".format(7))
         ## 数字补x (填充右边, 宽度为4)
-        print("{:x<4d}").format(3.1415926538)
+        print("{:x<4d}".format(7))
         ## 以逗号分隔的数字格式
-        print("{:,}").format(3.1415926538)
+        print("{:,}".format(3.1415926538))
         ## 百分比格式
-        print("{:.2%}").format(3.1415926538)
+        print("{:.2%}".format(3.1415926538))
         ## 指数记法
-        print("{:.2e}").format(3.1415926538)
+        print("{:.2e}".format(3.1415926538))
         ## 右对齐 (默认, 宽度为10)
-        print("{:10d}").format(3.1415926538)
+        print("{:10d}".format(7))
         ## 左对齐 (宽度为10)
-        print("{:<10d}").format(3.1415926538)
+        print("{:<10d}".format(7))
         ## 中间对齐 (宽度为10)
-        print("{:^10d}").format(3.1415926538)
+        print("{:^10d}".format(7))
         ## 进制 b、d、o、x 分别是二进制、十进制、八进制、十六进制。
         print('{:b}'.format(11))  #2
         print('{:d}'.format(11))  #10
@@ -175,3 +176,27 @@ class StringStudy(object):
         # 判断字符串是否可打印或是为空
         print("adb123".isprintable())
 
+    def text_slice(self):
+        print("纯文本切片解析：")
+        invoice = """
+        0.....6................................40........52...55........
+        1909  Pimoroni PiBrella                $17.50    3    $52.50
+        1489  6mm Tactile Switch x20           $4.95     2    $9.90
+        1510  Panavise Jr. - PV-201            $28.00    1    $28.00
+        1601  PiTFT Mini Kit 320x240           $34.95    1    $34.95
+        """
+        SKU = slice(0, 6)
+        DESCRIPTION = slice(6, 40)
+        UNIT_PRICE = slice(40, 52)
+        QUARTITY = slice(52, 55)
+        ITEM_TOTAL = slice(55, None)
+        line_items = invoice.split('\n')[2:]
+        for item in line_items:
+            print(item[UNIT_PRICE], item[DESCRIPTION])
+    def run(self):
+        self.text_slice()
+        self.Distingush()
+        self.format_function()
+
+ss =  StringStudy()
+ss.run()
